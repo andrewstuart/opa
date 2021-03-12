@@ -1085,7 +1085,7 @@ func TestPartialAutoUnknownInputs(t *testing.T) {
 		t.Run(strconv.Itoa(i+1), func(t *testing.T) {
 			r := New(
 				Query("data.test.p"),
-				AutoNilUnknowns(true),
+				AutoUnknownMissingInputs(true),
 				Input(test.input),
 				Module("test.rego", `
 package test
