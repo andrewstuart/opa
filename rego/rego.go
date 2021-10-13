@@ -453,7 +453,6 @@ type Rego struct {
 	parsedInput              ast.Value
 	unknowns                 []string
 	parsedUnknowns           []*ast.Term
-	autoUnknownMissingInputs bool
 	disableInlining          []string
 	shallowInlining          bool
 	skipPartialNamespace     bool
@@ -475,6 +474,8 @@ type Rego struct {
 	dump                     io.Writer
 	runtime                  *ast.Term
 	time                     time.Time
+	seed                     io.Reader
+	capabilities             *ast.Capabilities
 	builtinDecls             map[string]*ast.Builtin
 	builtinFuncs             map[string]*topdown.Builtin
 	unsafeBuiltins           map[string]struct{}
@@ -487,8 +488,9 @@ type Rego struct {
 	resolvers                []refResolver
 	schemaSet                *ast.SchemaSet
 	target                   string // target type (wasm, rego, etc.)
-	opa                      *opa.OPA
+	opa                      opa.EvalEngine
 	generateJSON             func(*ast.Term, *EvalContext) (interface{}, error)
+	autoUnknownMissingInputs bool
 }
 
 // Function represents a built-in function that is callable in Rego.
